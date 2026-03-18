@@ -1,4 +1,4 @@
-export type PlatformId = "devto" | "reddit" | "medium" | "twitter" | "substack"
+export type PlatformId = "devto" | "reddit" | "medium" | "twitter" | "twitter-articles" | "substack"
 
 export type EditorType = "markdown" | "richtext" | "plaintext"
 

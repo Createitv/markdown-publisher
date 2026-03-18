@@ -43,7 +43,8 @@ function formatFileSize(bytes: number): string {
 }
 
 function isMarkdownFile(file: File): boolean {
-  return file.name.toLowerCase().endsWith(".md")
+  const name = file.name.toLowerCase()
+  return name.endsWith(".md") || name.endsWith(".markdown")
 }
 
 function sortMarkdownFiles(files: File[]): File[] {
@@ -225,8 +226,8 @@ function Popup() {
 
   const handleFile = useCallback(
     async (file: File) => {
-      if (!file.name.endsWith(".md")) {
-        setError("Please upload a .md file")
+      if (!isMarkdownFile(file)) {
+        setError("Please upload a .md or .markdown file")
         return
       }
       setStatus("parsing")
@@ -468,7 +469,7 @@ function Popup() {
           ref={fileInputRef}
           id="file-input"
           type="file"
-          accept=".md"
+          accept="*/*"
           className="hidden"
           onChange={handleSingleFileInput}
         />

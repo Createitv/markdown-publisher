@@ -57,6 +57,16 @@ export const PLATFORMS: Record<PlatformId, PlatformConfig> = {
     loadDelay: 1500,
     enabled: true
   },
+  "twitter-articles": {
+    id: "twitter-articles",
+    name: "X Articles",
+    maxTags: 0,
+    editorType: "richtext",
+    contentStrategy: "full",
+    url: "https://x.com/compose/articles",
+    loadDelay: 3000,
+    enabled: true
+  },
   substack: {
     id: "substack",
     name: "Substack",
