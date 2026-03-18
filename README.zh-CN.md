@@ -1,40 +1,88 @@
+<div align="center">
+
 # Markdown Publisher
 
-[English](README.md) | [产品介绍页](https://landing-a8gxvl7ck-lingxiaoyao.vercel.app)
+**一次编写，多平台发布。**
 
 一个 Chrome 扩展，让你通过同一套流程，把一篇 Markdown 文章快速分发到多个平台。
 
-## 插件简介
+[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](https://github.com/Createitv/markdown-publisher/releases)
+[![License](https://img.shields.io/github/license/Createitv/markdown-publisher?style=flat-square)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/Createitv/markdown-publisher?style=flat-square)](https://github.com/Createitv/markdown-publisher/releases)
 
-当前支持的平台：
+[产品介绍页](https://md-publisher.vercel.app) · [English](README.md) · [下载](https://github.com/Createitv/markdown-publisher/releases)
 
-- X
-- X Articles
-- dev.to
-- Reddit
-- Medium
-- Substack
+</div>
+
+---
+
+## 支持的平台
+
+| 平台 | 类型 |
+|------|------|
+| **X** | 短帖（280 字符） |
+| **X Articles** | 长文 |
+| **dev.to** | 开发者博客 |
+| **Medium** | 博客 / 文章 |
+| **Reddit** | 社区帖子 |
+| **Substack** | 新闻通讯 |
+
+## 工作原理
+
+```
+ ┌──────────────┐
+ │  Markdown     │
+ │  (.md 文件)   │
+ └──────┬───────┘
+        │ 解析
+        ▼
+ ┌──────────────┐     ┌─────┐  ┌────────┐  ┌────────┐
+ │  弹窗 UI      │────▶│  X  │  │ Medium │  │ dev.to │  ...
+ │  选择频道      │     └─────┘  └────────┘  └────────┘
+ └──────────────┘     自动填充标题、正文、标签
+```
+
+1. 选择要发布的频道。
+2. 选择 Markdown 文件或拖入文件夹。
+3. 检查自动解析的标题和标签。
+4. 打开发布页面 — 内容自动填充。
 
 ## 适合什么场景
 
-- 一篇文章同时发布到多个平台
-- 保持标题和正文内容一致
-- 减少重复复制粘贴
-- 提高创作者、作者和小团队的发布效率
+- **一文多发** — 一篇文章同时发布到多个平台
+- **内容一致** — 标题和正文保持一致
+- **高效发布** — 跳过反复复制粘贴
+- 面向 **创作者、作者和小团队**
 
-## 使用流程
+## 安装
 
-1. 先选择要发布的频道。
-2. 再选择单个 Markdown 文件，或者包含 Markdown 文件的文件夹。
-3. 检查自动解析出来的标题和标签。
-4. 一次性打开所选平台的发布页面。
-5. 在各个平台继续完成发布。
-
-## GitHub Release 说明
-
-从 [Releases](../../releases) 下载最新的 `.zip` 文件，然后：
+从 [Releases](https://github.com/Createitv/markdown-publisher/releases) 下载最新的 `.zip` 文件，然后：
 
 1. 在 Chrome 中打开 `chrome://extensions/`
 2. 打开右上角的**开发者模式**
 3. 点击**加载已解压的扩展程序**
 4. 选择解压后的文件夹
+
+## 开发
+
+```bash
+# 安装依赖
+pnpm install
+
+# 启动开发服务器
+pnpm dev
+
+# 构建生产版本
+pnpm build
+```
+
+## 技术栈
+
+- [Plasmo](https://www.plasmo.com/) — Chrome 扩展框架
+- React + TypeScript
+- Tailwind CSS
+- 国际化（English / 中文）
+
+## 许可证
+
+MIT
