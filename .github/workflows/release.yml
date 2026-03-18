@@ -1,0 +1,72 @@
+name: Release Extension
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Release tag name, for example v0.1.0"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build extension
+        run: pnpm build
+
+      - name: Package extension
+        run: |
+          pnpm package
+
+      - name: Prepare release metadata
+        id: meta
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          PACKAGE_NAME="$(node -p "require('./package.json').name")"
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.tag_name }}" ]; then
+            TAG_NAME="${{ github.event.inputs.tag_name }}"
+          else
+            TAG_NAME="${GITHUB_REF_NAME:-v$VERSION}"
+          fi
+
+          ASSET_NAME="${PACKAGE_NAME}-${TAG_NAME}-chrome.zip"
+          cp build/chrome-mv3-prod.zip "build/${ASSET_NAME}"
+
+          echo "tag_name=$TAG_NAME" >> "$GITHUB_OUTPUT"
+          echo "asset_name=$ASSET_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.meta.outputs.tag_name }}" \
+            "build/${{ steps.meta.outputs.asset_name }}" \
+            --repo "${{ github.repository }}" \
+            --title "Markdown Publisher ${{ steps.meta.outputs.tag_name }}" \
+            --generate-notes

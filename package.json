@@ -1,0 +1,56 @@
+{
+  "name": "markdown-publisher",
+  "displayName": "Markdown Publisher",
+  "version": "0.0.1",
+  "description": "Publish Markdown to X, dev.to, Reddit, Medium, and Substack",
+  "author": "",
+  "scripts": {
+    "dev": "plasmo dev",
+    "build": "plasmo build",
+    "package": "plasmo package"
+  },
+  "dependencies": {
+    "@plasmohq/storage": "^1.15.0",
+    "gray-matter": "^4.0.3",
+    "marked": "^17.0.4",
+    "plasmo": "0.90.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@plasmohq/prettier-plugin-sort-imports": "4.0.1",
+    "@types/chrome": "0.0.258",
+    "@types/node": "20.11.5",
+    "@types/react": "18.2.48",
+    "@types/react-dom": "18.2.18",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "prettier": "3.2.4",
+    "tailwindcss": "^3.4.19",
+    "typescript": "5.3.3"
+  },
+  "manifest": {
+    "host_permissions": [
+      "https://dev.to/*",
+      "https://www.reddit.com/*",
+      "https://medium.com/*",
+      "https://x.com/*",
+      "https://twitter.com/*",
+      "https://*.substack.com/*"
+    ],
+    "permissions": [
+      "storage",
+      "tabs"
+    ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract",
+      "sharp"
+    ]
+  }
+}
