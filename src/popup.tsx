@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 
+import { useI18n } from "./utils/i18n"
 import { parseMarkdown } from "./utils/markdown-parser"
 import {
   type PlatformConfig,
@@ -86,6 +87,7 @@ async function readEntryFiles(entry: WebkitFileSystemEntry): Promise<File[]> {
 }
 
 function Popup() {
+  const { t, locale, setLocale } = useI18n()
   const folderInputRef = useRef<HTMLInputElement | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [doc, setDoc] = useState<ParsedDocument | null>(null)
@@ -227,7 +229,7 @@ function Popup() {
   const handleFile = useCallback(
     async (file: File) => {
       if (!isMarkdownFile(file)) {
-        setError("Please upload a .md or .markdown file")
+        setError(t("pleaseUploadMd"))
         return
       }
       setStatus("parsing")
@@ -250,23 +252,23 @@ function Popup() {
         setStatus("ready")
         chrome.runtime.sendMessage({ action: "doc-ready" })
       } catch (e) {
-        setError(e instanceof Error ? e.message : "Failed to parse markdown")
+        setError(e instanceof Error ? e.message : t("failedToParse"))
         setStatus("error")
       }
     },
-    [effectiveMaxTags]
+    [effectiveMaxTags, t]
   )
 
   const handleFileSelection = useCallback(
     async (files: FileList | File[]) => {
       if (!hasSelectedPlatforms) {
-        setError("Please select at least one channel before choosing a folder")
+        setError(t("selectChannelBeforeFolder"))
         return
       }
 
       const file = await resolveMarkdownFile(files)
       if (!file) {
-        setError("No markdown file found in the selected files or folder")
+        setError(t("noMarkdownFound"))
         setStatus("error")
         return
       }
@@ -282,7 +284,8 @@ function Popup() {
       handleFile,
       hasSelectedPlatforms,
       resetDocumentState,
-      resolveMarkdownFile
+      resolveMarkdownFile,
+      t
     ]
   )
 
@@ -292,9 +295,7 @@ function Popup() {
       setIsDragging(false)
 
       if (!hasSelectedPlatforms) {
-        setError(
-          "Select channels first, then drag a folder or markdown file here"
-        )
+        setError(t("selectChannelsThenDrag"))
         return
       }
 
@@ -316,7 +317,7 @@ function Popup() {
         await handleFileSelection(e.dataTransfer.files)
       }
     },
-    [handleFileSelection, hasSelectedPlatforms]
+    [handleFileSelection, hasSelectedPlatforms, t]
   )
 
   const handleFolderInput = useCallback(
@@ -360,35 +361,44 @@ function Popup() {
         const failed = resp.results
           ?.filter((r: FillResult) => !r.success)
           .map((r: FillResult) => r.platformId || "unknown")
-        setError(`Failed: ${failed?.join(", ")}`)
+        setError(t("failedNames", { names: failed?.join(", ") ?? "" }))
       }
       chrome.runtime.sendMessage({ action: "doc-cleared" })
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to fill editors")
+      setError(e instanceof Error ? e.message : t("failedToFill"))
       setStatus("error")
     }
-  }, [doc, selectedPlatforms, subreddit])
+  }, [doc, selectedPlatforms, subreddit, t])
 
   const platformCount = selectedPlatforms.size
   const buttonLabel =
     platformCount === 0
-      ? "Select a platform"
+      ? t("selectPlatform")
       : platformCount === 1
-        ? `Fill ${PLATFORMS[[...selectedPlatforms][0]].name} Editor`
-        : `Fill ${platformCount} Editors`
+        ? t("fillOneEditor", { name: PLATFORMS[[...selectedPlatforms][0]].name })
+        : t("fillMultipleEditors", { count: platformCount })
 
   return (
     <div className="w-96 p-4 bg-white">
-      <h1 className="text-lg font-bold text-gray-900 mb-3">
-        Markdown Publisher
-      </h1>
+      <div className="flex items-center justify-between mb-3">
+        <h1 className="text-lg font-bold text-gray-900">
+          Markdown Publisher
+        </h1>
+        <button
+          type="button"
+          onClick={() => setLocale(locale === "en" ? "zh" : "en")}
+          className="text-xs px-2 py-0.5 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition-colors"
+        >
+          {locale === "en" ? "中文" : "EN"}
+        </button>
+      </div>
 
       {/* Platform selector */}
       <div className="mb-3">
         <div className="flex items-center justify-between mb-1.5">
-          <label className="block text-xs text-gray-500">Channels</label>
+          <label className="block text-xs text-gray-500">{t("channels")}</label>
           <span className="text-xs text-gray-400">
-            {platformCount === 0 ? "Select first" : `${platformCount} selected`}
+            {platformCount === 0 ? t("selectFirst") : `${platformCount} ${t("selected")}`}
           </span>
         </div>
         <div className="grid grid-cols-2 gap-1.5">
@@ -475,19 +485,17 @@ function Popup() {
         />
         <p className="text-sm text-gray-500">
           {!hasSelectedPlatforms
-            ? "Select channels before choosing or dragging a folder"
+            ? t("selectChannelsBeforeDrag")
             : status === "parsing"
-              ? "Parsing markdown..."
-              : "Choose a folder or drag a folder / .md file here"}
+              ? t("parsingMarkdown")
+              : t("chooseFolderOrDrag")}
         </p>
         <div className="mt-2 flex items-center justify-center gap-3">
           <button
             type="button"
             onClick={() => {
               if (!hasSelectedPlatforms) {
-                setError(
-                  "Please select at least one channel before choosing a folder"
-                )
+                setError(t("selectChannelBeforeFolder"))
                 return
               }
               folderInputRef.current?.click()
@@ -495,15 +503,13 @@ function Popup() {
             disabled={!hasSelectedPlatforms}
             className="text-sm text-blue-600 hover:text-blue-700 font-medium disabled:text-gray-400 disabled:hover:text-gray-400"
           >
-            Choose folder
+            {t("chooseFolder")}
           </button>
           <button
             type="button"
             onClick={() => {
               if (!hasSelectedPlatforms) {
-                setError(
-                  "Please select at least one channel before choosing a markdown file"
-                )
+                setError(t("selectChannelBeforeFile"))
                 return
               }
               fileInputRef.current?.click()
@@ -511,7 +517,7 @@ function Popup() {
             disabled={!hasSelectedPlatforms}
             className="text-sm text-gray-600 hover:text-gray-700 font-medium disabled:text-gray-400 disabled:hover:text-gray-400"
           >
-            Choose .md file
+            {t("chooseMdFile")}
           </button>
         </div>
       </div>
@@ -531,14 +537,14 @@ function Popup() {
 
           {/* Title */}
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Title</label>
+            <label className="block text-xs text-gray-500 mb-1">{t("title")}</label>
             <input
               type="text"
               value={doc.title}
               onChange={(e) =>
                 updateDoc((prev) => ({ ...prev, title: e.target.value }))
               }
-              placeholder="Article title"
+              placeholder={t("articleTitle")}
               className="w-full text-sm border border-gray-200 rounded-md px-2.5 py-1.5 focus:outline-none focus:border-blue-400"
             />
           </div>
@@ -547,7 +553,7 @@ function Popup() {
           {effectiveMaxTags > 0 && (
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs text-gray-500">Tags</label>
+                <label className="text-xs text-gray-500">{t("tags")}</label>
                 <span
                   className={`text-xs ${atTagLimit ? "text-amber-500" : "text-gray-400"}`}
                 >
@@ -584,7 +590,7 @@ function Popup() {
                       addTag(tagInput)
                     }
                   }}
-                  placeholder="Add tag..."
+                  placeholder={t("addTag")}
                   className="mt-1.5 w-full text-xs border border-gray-200 rounded-md px-2.5 py-1 focus:outline-none focus:border-blue-400"
                 />
               )}
@@ -595,7 +601,7 @@ function Popup() {
           {selectedPlatforms.has("reddit") && (
             <div>
               <label className="block text-xs text-gray-500 mb-1">
-                Subreddit
+                {t("subreddit")}
               </label>
               <div className="flex items-center gap-1">
                 <span className="text-sm text-gray-400">r/</span>
@@ -617,9 +623,9 @@ function Popup() {
           {selectedPlatforms.has("twitter") && (
             <div className="p-2 bg-gray-50 rounded-md">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-gray-500">X post preview</span>
+                <span className="text-xs text-gray-500">{t("xPostPreview")}</span>
                 <span className="text-xs text-gray-400">
-                  {(doc.title + "\n\n" + doc.body).length} chars
+                  {(doc.title + "\n\n" + doc.body).length} {t("chars")}
                 </span>
               </div>
               <p className="text-xs text-gray-700 font-medium">{doc.title}</p>
@@ -668,7 +674,7 @@ function Popup() {
       {/* Status */}
       {status === "filling" && (
         <p className="mt-2 text-sm text-amber-600">
-          Opening {platformCount} editor{platformCount > 1 ? "s" : ""}...
+          {t("openingEditors", { count: platformCount })}
         </p>
       )}
       {error && !fillResults.length && (
