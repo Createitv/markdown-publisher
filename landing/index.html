@@ -12,10 +12,10 @@
     }
 
     :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --primary-light: #818cf8;
-      --primary-bg: #eef2ff;
+      --primary: #111827;
+      --primary-dark: #000000;
+      --primary-light: #374151;
+      --primary-bg: #f3f4f6;
       --gray-50: #f9fafb;
       --gray-100: #f3f4f6;
       --gray-200: #e5e7eb;
@@ -27,9 +27,9 @@
       --gray-900: #111827;
       --white: #ffffff;
       --radius: 12px;
-      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.03);
     }
 
     body {
@@ -138,7 +138,7 @@
     /* ---- Hero ---- */
     .hero {
       padding: 140px 0 100px;
-      background: linear-gradient(135deg, #312e81 0%, #4f46e5 40%, #6366f1 60%, #818cf8 100%);
+      background: #111827;
       color: var(--white);
       text-align: center;
       position: relative;
@@ -152,8 +152,8 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.06) 0%, transparent 50%),
-                  radial-gradient(circle at 70% 80%, rgba(255,255,255,0.04) 0%, transparent 40%);
+      background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.03) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 80%, rgba(255,255,255,0.02) 0%, transparent 40%);
       pointer-events: none;
     }
 
@@ -161,7 +161,7 @@
       width: 80px;
       height: 80px;
       margin: 0 auto 28px;
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.1);
       border-radius: 20px;
       display: flex;
       align-items: center;
@@ -195,19 +195,19 @@
       align-items: center;
       gap: 8px;
       background: var(--white);
-      color: var(--primary-dark);
+      color: #111827;
       font-size: 16px;
       font-weight: 600;
       padding: 14px 32px;
       border-radius: 10px;
       transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
     }
 
     .hero-cta:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-      color: var(--primary-dark);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      color: #000000;
     }
 
     .hero-cta svg {
@@ -317,9 +317,9 @@
     .step-number {
       width: 72px;
       height: 72px;
-      background: var(--primary-bg);
-      border: 3px solid var(--primary-light);
-      color: var(--primary);
+      background: var(--gray-100);
+      border: 3px solid var(--gray-300);
+      color: var(--gray-900);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -367,8 +367,8 @@
     }
 
     .platform-badge:hover {
-      border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px var(--primary-bg);
+      border-color: var(--gray-900);
+      box-shadow: 0 0 0 3px var(--gray-100);
     }
 
     .platform-dot {
@@ -377,12 +377,12 @@
       border-radius: 50%;
     }
 
-    .platform-dot.x { background: #000000; }
-    .platform-dot.devto { background: #0a0a0a; }
-    .platform-dot.reddit { background: #ff4500; }
-    .platform-dot.medium { background: #00ab6c; }
-    .platform-dot.substack { background: #ff6719; }
-    .platform-dot.x-articles { background: #1d9bf0; }
+    .platform-dot.x { background: #111827; }
+    .platform-dot.devto { background: #374151; }
+    .platform-dot.reddit { background: #6b7280; }
+    .platform-dot.medium { background: #111827; }
+    .platform-dot.substack { background: #4b5563; }
+    .platform-dot.x-articles { background: #374151; }
 
     /* ---- Install ---- */
     .install-box {
@@ -424,8 +424,8 @@
       top: 10px;
       width: 24px;
       height: 24px;
-      background: var(--primary-bg);
-      color: var(--primary);
+      background: var(--gray-900);
+      color: var(--white);
       border-radius: 50%;
       font-size: 13px;
       font-weight: 700;
@@ -443,7 +443,7 @@
       padding: 2px 8px;
       border-radius: 4px;
       font-size: 13px;
-      color: var(--primary-dark);
+      color: var(--gray-900);
     }
 
     .install-cta {
@@ -547,13 +547,7 @@
     <div class="container">
       <div class="nav-brand">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-          <defs>
-            <linearGradient id="nav-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#3B82F6"/>
-              <stop offset="100%" stop-color="#8B5CF6"/>
-            </linearGradient>
-          </defs>
-          <rect x="4" y="4" width="120" height="120" rx="24" ry="24" fill="url(#nav-bg)"/>
+          <rect x="4" y="4" width="120" height="120" rx="24" ry="24" fill="#111827"/>
           <path d="M38 38 L56 64 L38 90" stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           <path d="M68 38 L50 64 L68 90" stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           <path d="M78 56 L94 40 L94 54" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
