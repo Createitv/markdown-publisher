@@ -9,6 +9,7 @@
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](https://github.com/Createitv/markdown-publisher/releases)
 [![License](https://img.shields.io/github/license/Createitv/markdown-publisher?style=flat-square)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/Createitv/markdown-publisher?style=flat-square)](https://github.com/Createitv/markdown-publisher/releases)
+[![Stars](https://img.shields.io/github/stars/Createitv/markdown-publisher?style=flat-square)](https://github.com/Createitv/markdown-publisher)
 
 [产品介绍页](https://md-publisher.vercel.app) · [English](README.md) · [下载](https://github.com/Createitv/markdown-publisher/releases)
 
@@ -82,6 +83,19 @@ pnpm build
 - React + TypeScript
 - Tailwind CSS
 - 国际化（English / 中文）
+
+## 参与贡献
+
+欢迎贡献代码！可以直接提 Issue 或提交 Pull Request。
+
+## 支持项目
+
+如果这个项目对你有帮助：
+
+- 给项目点个 **Star** 表示支持
+- **分享** 给你的朋友或发到社交媒体
+- 通过 [Issues](https://github.com/Createitv/markdown-publisher/issues) **反馈 Bug** 或 **建议新功能**
+- **Fork & PR** — 任何大小的贡献都非常欢迎
 
 ## 许可证
 

@@ -9,6 +9,7 @@ A Chrome extension for publishing one Markdown article to multiple platforms fro
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](https://github.com/Createitv/markdown-publisher/releases)
 [![License](https://img.shields.io/github/license/Createitv/markdown-publisher?style=flat-square)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/Createitv/markdown-publisher?style=flat-square)](https://github.com/Createitv/markdown-publisher/releases)
+[![Stars](https://img.shields.io/github/stars/Createitv/markdown-publisher?style=flat-square)](https://github.com/Createitv/markdown-publisher)
 
 [Landing Page](https://md-publisher.vercel.app) · [中文说明](README.zh-CN.md) · [Download](https://github.com/Createitv/markdown-publisher/releases)
 
@@ -83,6 +84,19 @@ pnpm build
 - React + TypeScript
 - Tailwind CSS
 - i18n (English / 中文)
+
+## Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+## Support
+
+If you find this project useful:
+
+- **Star** this repo to show your support
+- **Share** it with friends or on social media
+- **Report bugs** or **suggest features** via [Issues](https://github.com/Createitv/markdown-publisher/issues)
+- **Fork & PR** — contributions of all sizes are appreciated
 
 ## License
 
