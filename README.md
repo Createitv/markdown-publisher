@@ -1,6 +1,6 @@
 # Markdown Publisher
 
-[中文说明](README.zh-CN.md)
+[中文说明](README.zh-CN.md) | [Landing Page](https://landing-a8gxvl7ck-lingxiaoyao.vercel.app)
 
 Markdown Publisher is a Chrome extension for publishing one Markdown article to multiple platforms from a single workflow.
 
@@ -11,6 +11,7 @@ Markdown Publisher helps you publish the same article faster without repeating t
 Supported channels:
 
 - X
+- X Articles
 - dev.to
 - Reddit
 - Medium

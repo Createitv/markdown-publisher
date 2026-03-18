@@ -1,6 +1,6 @@
 # Markdown Publisher
 
-[English](README.md)
+[English](README.md) | [产品介绍页](https://landing-a8gxvl7ck-lingxiaoyao.vercel.app)
 
 一个 Chrome 扩展，让你通过同一套流程，把一篇 Markdown 文章快速分发到多个平台。
 
@@ -9,6 +9,7 @@
 当前支持的平台：
 
 - X
+- X Articles
 - dev.to
 - Reddit
 - Medium
